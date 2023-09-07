@@ -5,7 +5,8 @@
   "description": "Working with expressjs for cloud-based microservices",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --config .eslintrc.js \"./src/**/*.js\""
   },
   "repository": {
     "type": "git",
@@ -15,6 +16,7 @@
   "author": "Carmen Whitton",
   "license": "UNLICENSED",
   "devDependencies": {
+    "eslint": "^8.48.0",
     "prettier": "3.0.3"
   }
 }
