@@ -1,0 +1,17 @@
+{
+  "name": "fragments",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Working with expressjs for cloud-based microservices",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+   "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Carmen-Git-It/fragments.git"
+  },
+  "keywords": [],
+  "author": "Carmen Whitton",
+  "license": "UNLICENSED"
+}
