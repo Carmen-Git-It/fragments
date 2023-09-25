@@ -11,6 +11,4 @@ const router = express.Router();
 // Define our first route, which will be: GET /v1/fragments
 router.get('/fragments', require('./get'));
 
-// Other routes will go here later on...
-
 module.exports = router;
