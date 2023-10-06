@@ -13,7 +13,6 @@ const {
   listFragments,
   deleteFragment,
 } = require('./data');
-const { resolve } = require('path');
 
 const validTypes = [
   `text/plain`,
