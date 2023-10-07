@@ -7,21 +7,33 @@ const logger = require('../../logger');
  */
 module.exports = (req, res) => {
   logger.info('GET request to getById: ', req.params.id);
+  // Split in case of fragmentID.txt or some other type
   let params = req.params.id.split('.');
   const id = params[0];
+  // Get the fragment
   Fragment.byId(req.user, id)
     .then((fragment) => {
       fragment.getData().then((data) => {
+        // if there is a filetype extension, change the content-type header accordingly
         if (params.length > 1) {
           if (params[1] === 'txt') {
             res.set('content-type', 'text/plain');
           } else {
             logger.error('Invalid filetype in getById request: ', params[1]);
-            throw new Error(`Invalid filetype: .${params[1]}`);
+            res
+              .status(415)
+              .json(
+                createErrorResponse(
+                  415,
+                  `Could not process fragment id:${id} as filetype .${params[1]}`
+                )
+              );
+            return;
           }
         } else {
-          res.set('content-type', 'data.type');
+          res.set('content-type', data.type);
         }
+        // Send the data with the corresponding content-type header
         res.status(200).send(data);
       });
     })

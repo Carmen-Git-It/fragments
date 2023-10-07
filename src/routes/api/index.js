@@ -7,6 +7,7 @@ const express = require('express');
 const contentType = require('content-type');
 const { Fragment } = require('../../model/fragment');
 
+// Set up middleware
 const rawBody = () =>
   express.raw({
     inflate: true,
@@ -20,6 +21,7 @@ const rawBody = () =>
 // Create a router on which to mount our API endpoints
 const router = express.Router();
 
+// Set up API endpoints
 router.get('/fragments', require('./get'));
 
 router.get('/fragments/:id', require('./getById'));
