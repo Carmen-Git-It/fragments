@@ -33,6 +33,8 @@ describe('GET /v1/fragments/:id', () => {
             const res = await request(app).get(`/v1/fragments/${id}`).auth('test123', 'test123');
             expect(res.statusCode).toBe(200);
             expect(res.text).not.toBe(undefined);
+            console.log(res.text);
+            console.log(res.body);
             expect(res.text).toBe('Hello World');
           });
       });

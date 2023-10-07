@@ -6,6 +6,7 @@ const logger = require('../../logger');
  * Get the data for a specific Fragment in a variety of formats
  */
 module.exports = (req, res) => {
+  logger.info('GET request to getById: ', req.params.id);
   let params = req.params.id.split('.');
   const id = params[0];
   Fragment.byId(req.user, id)
@@ -15,12 +16,12 @@ module.exports = (req, res) => {
           if (params[1] === 'txt') {
             res.set('content-type', 'text/plain');
           } else {
+            logger.error('Invalid filetype in getById request: ', params[1]);
             throw new Error(`Invalid filetype: .${params[1]}`);
           }
         } else {
-          res.set('content-type', data.type);
+          res.set('content-type', 'data.type');
         }
-
         res.status(200).send(data);
       });
     })
