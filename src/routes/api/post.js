@@ -24,13 +24,14 @@ module.exports = (req, res) => {
     type: parsed.type,
   });
 
-  fragment.setData(req.body);
-  fragment.save();
+  fragment.setData(req.body).then(() => {
+    fragment.save().then(() => {
+      logger.info('Created and saved new fragment: ', fragment);
 
-  logger.info('Created and saved new fragment: ', fragment);
-
-  // Attach location header, set exposed header control
-  res.append('Location', url + '/v1/fragments/' + fragment.id);
-  res.append('Access-Control-Expose-Headers', 'Location');
-  res.status(201).json(createSuccessResponse({}));
+      // Attach location header, set exposed header control
+      res.append('Location', url + '/v1/fragments/' + fragment.id);
+      res.append('Access-Control-Expose-Headers', 'Location');
+      res.status(201).json(createSuccessResponse({}));
+    });
+  });
 };

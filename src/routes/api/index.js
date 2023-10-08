@@ -1,5 +1,3 @@
-// src/routes/api/index.js
-
 /**
  * The main entry-point for the v1 version of the fragments API.
  */
