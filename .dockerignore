@@ -1,0 +1,14 @@
+# Ignore the following when building the Docker image
+.github/
+.vscode/
+coverage/
+node_modules/
+tests/
+!tests/.htpasswd
+.env
+.eslintrc.js
+.git/
+.gitignore
+.prettier*
+jest*
+*.tgz
