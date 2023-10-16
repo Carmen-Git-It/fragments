@@ -31,6 +31,36 @@ cd fragments
 npm install
 ```
 
+## Docker Image
+
+If you would rather use Docker, follow the steps below.
+
+1. Install Docker on your local machine, Docker Desktop is an easy way to do this https://www.docker.com/products/docker-desktop/
+
+2. Clone this repository to your local machine:
+
+```
+git clone https://github.com/Carmen-Git-It/fragments.git
+```
+
+3. Navigate to the project directory:
+
+```bash
+cd fragments
+```
+
+4. Build the Docker image:
+
+```
+docker build -t fragments:latest .
+```
+
+5. Run the image in detached mode:
+
+```
+docker run --rm --name fragments --env-file .env -e LOG_LEVEL=debug -p 8080:8080 -d fragments:latest
+```
+
 # Usage
 
 ## Starting in Production Mode
