@@ -28,8 +28,6 @@ RUN npm run lint
 ### Production Stage
 FROM node:21.1.0-alpine3.17@sha256:c8e4f0ad53631bbf60449e394a33c5b8b091343a8702bd03615c7c13ae4c445d
 
-RUN apk add tini
-
 LABEL maintainer="Carmen Whitton <carmenwhitton@gmail.com>"
 LABEL description="Fragments node.js microservice"
 
@@ -58,8 +56,6 @@ ENV NPM_CONFIG_COLOR=false
 
 # Start the service
 USER node
-
-ENTRYPOINT ["sbin/tini", "--"]
 
 CMD ["node", "./src/index.js"]
 
