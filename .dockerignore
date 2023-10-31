@@ -3,12 +3,11 @@
 .vscode/
 coverage/
 node_modules/
-tests/
+# tests/
 !tests/.htpasswd
 .env
-.eslintrc.js
 .git/
 .gitignore
 .prettier*
-jest*
+# jest*
 *.tgz
