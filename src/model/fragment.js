@@ -123,8 +123,13 @@ class Fragment {
       throw new Error('require data to set data');
     }
     this.size = data.length;
-    this.updated = new Date();
-    return writeFragmentData(this.ownerId, this.id, data);
+
+    // Save the fragment metadata, then the fragment data, if saving metadata fails, return the fail state
+    const result = await this.save();
+    if (result) {
+      return writeFragmentData(this.ownerId, this.id, data);
+    }
+    return result;
   }
 
   /**
