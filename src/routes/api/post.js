@@ -14,6 +14,9 @@ module.exports = (req, res) => {
   if (!Buffer.isBuffer(req.body)) {
     logger.error('POST /fragments request body is not of type Buffer: ', req.body);
     res.status(415).json(createErrorResponse(415, `unsupported filetype`));
+
+    // Return to ensure we don't write any data
+    return;
   }
 
   const parsed = contentType.parse(req);
