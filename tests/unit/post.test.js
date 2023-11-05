@@ -29,6 +29,7 @@ describe('POST /v1/fragments', () => {
     expect(res.statusCode).toBe(201);
     expect(res.body.status).toBe('ok');
     expect(res.get('Location').startsWith('http://')).toBe(true);
+    expect(res.get('Location').endsWith(res.body.fragment.id)).toBe(true);
     expect(res.body.fragment !== undefined).toBe(true);
     expect(res.body.fragment.size).toBe('Hello World'.length);
   });
