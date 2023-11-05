@@ -1,6 +1,8 @@
 # Docker file for the Fragments microservice
 # Used by the Docker engine to create the image
 
+## Multiple build stages do nothing but slow down the build process, as there is no build step for a js Express app.
+
 ### Production Stage
 FROM node:21.1.0-alpine3.17@sha256:c8e4f0ad53631bbf60449e394a33c5b8b091343a8702bd03615c7c13ae4c445d
 
