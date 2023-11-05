@@ -7,7 +7,7 @@ const logger = require('../../logger');
  * Get a list of fragments for the current user
  */
 
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
   const url = process.env.API_URL ? process.env.API_URL : req.headers.host;
 
   // check that the POSTed data is a buffer.
@@ -27,14 +27,21 @@ module.exports = (req, res) => {
     type: parsed.type,
   });
 
-  fragment.setData(req.body).then(() => {
-    fragment.save().then(() => {
-      logger.info('Created and saved new fragment: ', fragment);
+  await fragment.setData(req.body);
+  await fragment.save();
+  logger.info('Created and saved new fragment: ', fragment);
+  res.append('Location', url + '/v1/fragments/' + fragment.id);
+  res.append('Access-Control-Expose-Headers', 'Location');
+  res.status(201).json(createSuccessResponse({}));
 
-      // Attach location header, set exposed header control
-      res.append('Location', url + '/v1/fragments/' + fragment.id);
-      res.append('Access-Control-Expose-Headers', 'Location');
-      res.status(201).json(createSuccessResponse({}));
-    });
-  });
+  // fragment.setData(req.body).then(() => {
+  //   fragment.save().then(() => {
+  //     logger.info('Created and saved new fragment: ', fragment);
+
+  //     // Attach location header, set exposed header control
+  //     res.append('Location', url + '/v1/fragments/' + fragment.id);
+  //     res.append('Access-Control-Expose-Headers', 'Location');
+  //     res.status(201).json(createSuccessResponse({}));
+  //   });
+  // });
 };
