@@ -125,11 +125,8 @@ class Fragment {
     this.size = data.length;
 
     // Save the fragment metadata, then the fragment data, if saving metadata fails, return the fail state
-    const result = await this.save();
-    if (result) {
-      return writeFragmentData(this.ownerId, this.id, data);
-    }
-    return result;
+    await this.save();
+    return writeFragmentData(this.ownerId, this.id, data);
   }
 
   /**
