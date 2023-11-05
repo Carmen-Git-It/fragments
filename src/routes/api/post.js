@@ -8,7 +8,7 @@ const logger = require('../../logger');
  */
 
 module.exports = async (req, res) => {
-  const url = process.env.API_URL ? process.env.API_URL : req.headers.host;
+  const url = process.env.API_URL ? process.env.API_URL : 'http://' + req.headers.host;
 
   // check that the POSTed data is a buffer.
   if (!Buffer.isBuffer(req.body)) {
@@ -32,16 +32,16 @@ module.exports = async (req, res) => {
   logger.info('Created and saved new fragment: ', fragment);
   res.append('Location', url + '/v1/fragments/' + fragment.id);
   res.append('Access-Control-Expose-Headers', 'Location');
-  res.status(201).json(createSuccessResponse({}));
-
-  // fragment.setData(req.body).then(() => {
-  //   fragment.save().then(() => {
-  //     logger.info('Created and saved new fragment: ', fragment);
-
-  //     // Attach location header, set exposed header control
-  //     res.append('Location', url + '/v1/fragments/' + fragment.id);
-  //     res.append('Access-Control-Expose-Headers', 'Location');
-  //     res.status(201).json(createSuccessResponse({}));
-  //   });
-  // });
+  res.status(201).json(
+    createSuccessResponse({
+      fragment: {
+        id: fragment.id,
+        ownerId: fragment.ownerId,
+        created: fragment.created,
+        updated: fragment.updated,
+        type: fragment.type,
+        size: fragment.size,
+      },
+    })
+  );
 };

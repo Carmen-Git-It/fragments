@@ -19,7 +19,7 @@ describe('POST /v1/fragments', () => {
     expect(res.statusCode).toBe(415);
   });
 
-  // Using a valid username/password pair should give a success result with a .fragments array
+  // Using a valid username/password pair should give a success result with fragment metadata and a location header
   test('authenticated users post a fragment successfully', async () => {
     const res = await request(app)
       .post('/v1/fragments')
@@ -28,6 +28,8 @@ describe('POST /v1/fragments', () => {
       .send('Hello World');
     expect(res.statusCode).toBe(201);
     expect(res.body.status).toBe('ok');
-    expect(res.get('Location') !== undefined).toBe(true);
+    expect(res.get('Location').startsWith('http://')).toBe(true);
+    expect(res.body.fragment !== undefined).toBe(true);
+    expect(res.body.fragment.size).toBe('Hello World'.length);
   });
 });
