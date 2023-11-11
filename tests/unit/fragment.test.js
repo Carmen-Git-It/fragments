@@ -6,12 +6,12 @@ const wait = async (ms = 1000) => new Promise((resolve) => setTimeout(resolve, m
 
 const validTypes = [
   `text/plain`,
-  /*
-   Currently, only text/plain is supported. Others will be added later.
-
   `text/markdown`,
   `text/html`,
   `application/json`,
+  /*
+   Currently, only text formats are supported. Others will be added later.
+
   `image/png`,
   `image/jpeg`,
   `image/webp`,
@@ -167,6 +167,15 @@ describe('Fragment class', () => {
         size: 0,
       });
       expect(fragment.formats).toEqual(['text/plain']);
+    });
+
+    test('formats returns the expected result for application/json', () => {
+      const fragment = new Fragment({
+        ownerId: '1234',
+        type: 'application/json',
+        size: 0,
+      });
+      expect(fragment.formats).toEqual(['text/plain', 'application/json']);
     });
   });
 
