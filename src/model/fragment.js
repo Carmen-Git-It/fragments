@@ -14,16 +14,18 @@ const {
   deleteFragment,
 } = require('./data');
 
-const validTypes = [
-  `text/plain`,
-  // `text/markdown`,
-  // `text/html`,
-  // `application/json`,
-  // `image/png`,
-  // `image/jpeg`,
-  // `image/webp`,
-  // `image/gif`,
-];
+// Define a map for the valid conversions of types to file extensions
+const typeExtensionMap = new Map();
+typeExtensionMap.set('text/plain', ['txt']);
+typeExtensionMap.set('text/markdown', ['md', 'html', 'txt']);
+typeExtensionMap.set('text/html', ['html', 'txt']);
+typeExtensionMap.set('application/json', ['json', 'txt']);
+
+const typeConversionMap = new Map();
+typeConversionMap.set('text/plain', ['text/plain']);
+typeConversionMap.set('text/markdown', ['text/plain', 'text/html', 'text/markdown']);
+typeConversionMap.set('text/html', ['text/plain', 'text/html']);
+typeConversionMap.set('application/json', ['text/plain', 'application/json']);
 
 class Fragment {
   constructor({ id, ownerId, created, updated, type, size = 0 }) {
@@ -39,7 +41,7 @@ class Fragment {
     if (size < 0) {
       throw new Error('size must be greater than or equal to 0');
     }
-    if (!validTypes.includes(contentType.parse(type).type)) {
+    if (!typeConversionMap.get(contentType.parse(type).type)) {
       throw new Error(`${type} is not a valid type`);
     }
     if (!id) {
@@ -152,7 +154,7 @@ class Fragment {
    * @returns {Array<string>} list of supported mime types
    */
   get formats() {
-    return validTypes;
+    return typeConversionMap.get(this.mimeType);
   }
 
   /**
@@ -161,12 +163,29 @@ class Fragment {
    * @returns {boolean} true if we support this Content-Type (i.e., type/subtype)
    */
   static isSupportedType(value) {
-    for (const t of validTypes) {
-      if (contentType.parse(t).type === contentType.parse(value).type) {
-        return true;
-      }
+    if (typeConversionMap.get(contentType.parse(value).type)) {
+      return true;
     }
     return false;
+  }
+
+  /**
+   * Returns true if this fragment can be converted into the given extension
+   * @param {string} value a file extension (e.g., '.txt', '.html', '.md')
+   * @returns {boolean} true if this fragment can be converted to the given file extension
+   */
+  isSupportedExtension(value) {
+    try {
+      for (const t of typeExtensionMap.get(this.type)) {
+        if (value === t) {
+          return true;
+        }
+      }
+      return false;
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
   }
 }
 
