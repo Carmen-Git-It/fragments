@@ -55,7 +55,7 @@ describe('GET /v1/fragments', () => {
       .auth('test123', 'test123')
       .send('Hello World')
       .then(async () => {
-        const res = await request(app).get('/v1/fragments?expanded=1').auth('test123', 'test123');
+        const res = await request(app).get('/v1/fragments?expand=1').auth('test123', 'test123');
         expect(res.statusCode).toBe(200);
         expect(res.body.status).toBe('ok');
         expect(res.body.fragments.length).toBe(3);
