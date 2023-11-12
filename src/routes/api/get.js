@@ -6,7 +6,7 @@ const logger = require('../../logger');
  * Get a list of fragments for the current user
  */
 module.exports = (req, res) => {
-  const expanded = 'expanded' in req.query ? (req.query.expanded === '1' ? true : false) : false;
+  const expanded = 'expand' in req.query ? (req.query.expand === '1' ? true : false) : false;
 
   logger.info('GET request for /fragments from user: ', req.user, ' Expanded: ', expanded);
 

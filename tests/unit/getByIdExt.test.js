@@ -1,8 +1,6 @@
 const request = require('supertest');
 
 const app = require('../../src/app');
-const hash = require('../../src/hash');
-const { Fragment } = require('../../src/model/fragment');
 const contentType = require('content-type');
 
 describe('GET /v1/fragments/:id.ext', () => {
