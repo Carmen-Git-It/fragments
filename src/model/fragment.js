@@ -176,7 +176,7 @@ class Fragment {
    */
   isSupportedExtension(value) {
     try {
-      for (const t of typeExtensionMap.get(this.type)) {
+      for (const t of typeExtensionMap.get(contentType.parse(this.type).type)) {
         if (value === t) {
           return true;
         }

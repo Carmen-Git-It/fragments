@@ -19,29 +19,34 @@ module.exports = async (req, res) => {
     return;
   }
 
-  const parsed = contentType.parse(req);
+  try {
+    const parsed = contentType.parse(req);
 
-  // Create a new fragment and set the data, save it to the DB
-  let fragment = new Fragment({
-    ownerId: req.user,
-    type: parsed.type,
-  });
+    // Create a new fragment and set the data, save it to the DB
+    let fragment = new Fragment({
+      ownerId: req.user,
+      type: contentType.format(parsed),
+    });
 
-  await fragment.setData(req.body);
-  await fragment.save();
-  logger.info('Created and saved new fragment: ', fragment);
-  res.append('Location', url + '/v1/fragments/' + fragment.id);
-  res.append('Access-Control-Expose-Headers', 'Location');
-  res.status(201).json(
-    createSuccessResponse({
-      fragment: {
-        id: fragment.id,
-        ownerId: fragment.ownerId,
-        created: fragment.created,
-        updated: fragment.updated,
-        type: fragment.type,
-        size: fragment.size,
-      },
-    })
-  );
+    await fragment.setData(req.body);
+    await fragment.save();
+    logger.info('Created and saved new fragment: ', fragment);
+    res.append('Location', url + '/v1/fragments/' + fragment.id);
+    res.append('Access-Control-Expose-Headers', 'Location');
+    res.status(201).json(
+      createSuccessResponse({
+        fragment: {
+          id: fragment.id,
+          ownerId: fragment.ownerId,
+          created: fragment.created,
+          updated: fragment.updated,
+          type: fragment.type,
+          size: fragment.size,
+        },
+      })
+    );
+  } catch (e) {
+    logger.error('Error creating new fragment: ' + e);
+    createErrorResponse(415, 'Error creating new fragment');
+  }
 };

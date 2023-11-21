@@ -2,7 +2,7 @@ const { createErrorResponse } = require('../../response');
 const { Fragment } = require('../../model/fragment');
 const logger = require('../../logger');
 const MarkdownIt = require('markdown-it');
-
+const contentType = require('content-type');
 const md = new MarkdownIt();
 
 /**
@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
           res.set('content-type', 'text/plain');
         } else if (params[1] === 'html') {
           res.set('content-type', 'text/html');
-          if (fragment.type === 'text/markdown') {
+          if (contentType.parse(fragment.type).type === 'text/markdown') {
             logger.info('Converting fragment markdown to html');
             data = md.render(data.toString());
           }
