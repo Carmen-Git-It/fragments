@@ -159,10 +159,18 @@ Dev Dependencies:
 
 Dependencies:
 
+- aws-jwt-verify (auth)
 - compression (Middleware to compress responses)
+- content-type (for parsing request content-type)
 - cors (middleware that manages cross-origin requests)
+- dotenv (accessing .env files)
 - express (application framework)
 - helmet (middleware that secures the application by adding response headers)
+- http-auth (auth)
+- http-auth-passport (auth)
+- markdown-it (converting markdown into html for server fragments)
+- passport (auth)
+- passport-http-bearer (auth)
 - pino (logger)
 - pino-http (http logger)
 - pino-pretty (formats logs)
