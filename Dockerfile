@@ -19,6 +19,7 @@ RUN npm ci --production
 
 # Copy source
 COPY --chown=node:node ./src ./src
+COPY --chown=node:node ./tests ./tests
 
 # We default to use port 8080 in our service
 ENV PORT=8080

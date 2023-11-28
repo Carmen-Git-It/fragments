@@ -3,9 +3,7 @@
 .vscode/
 coverage/
 node_modules/
-tests/
 .eslintrc.js
-!tests/.htpasswd
 .env
 .git/
 .gitignore
