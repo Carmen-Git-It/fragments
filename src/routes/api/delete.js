@@ -10,7 +10,6 @@ module.exports = async (req, res) => {
     logger.info('Successfully DELETED fragment: ' + id);
     res.status(200).json(createSuccessResponse());
   } catch (e) {
-    console.log(e);
     logger.error('Could not find and delete fragment: ' + id + ' owned by: ' + req.user);
     res
       .status(404)
