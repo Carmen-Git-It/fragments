@@ -80,3 +80,11 @@ jobs:
             AWS_COGNITO_CLIENT_ID=4rs903jcjkhgb7jf80tl4s0dq
             API_URL=http://EC2Con-EcsEl-DgLl6XPfbc7U-205527954.us-east-1.elb.amazonaws.com:8080
             PORT=8080
+
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.update-task-def.outputs.task-definition }}
+          cluster: fragments-cluster
+          service: fragments-service
+          wait-for-service-stability: true
