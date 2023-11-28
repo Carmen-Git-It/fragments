@@ -1,7 +1,7 @@
 {
   "name": "fragments",
   "private": true,
-  "version": "0.9.2",
+  "version": "0.9.3",
   "description": "Working with expressjs for cloud-based microservices",
   "main": "index.js",
   "scripts": {
