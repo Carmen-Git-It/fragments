@@ -16,6 +16,8 @@ const router = express.Router();
  */
 router.use(`/v1`, authenticate(), require('./api'));
 
+const { hostname } = require('os');
+
 /**
  * Define a simple health check route. If the server is running
  * we'll respond with a 200 OK.  If not, the server isn't healthy.
@@ -29,6 +31,7 @@ router.get('/', (req, res) => {
       author,
       githubUrl: 'https://github.com/Carmen-Git-It/fragments',
       version,
+      hostname: hostname(),
     })
   );
 });
