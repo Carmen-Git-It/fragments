@@ -51,12 +51,12 @@ class Fragment {
     }
     this.ownerId = ownerId;
     if (!created) {
-      this.created = new Date().toString();
+      this.created = new Date().toISOString();
     } else {
       this.created = created;
     }
     if (!updated) {
-      this.updated = new Date().toString();
+      this.updated = new Date().toISOString();
     } else {
       this.updated = updated;
     }
@@ -103,7 +103,7 @@ class Fragment {
    * @returns Promise<void>
    */
   save() {
-    this.updated = new Date().toString();
+    this.updated = new Date().toISOString();
     return writeFragment(this);
   }
 
