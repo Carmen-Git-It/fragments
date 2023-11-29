@@ -21,6 +21,9 @@ Content-Type: application/json; charset=utf-8
 jsonpath "$.size" == 23
 jsonpath "$.type" == "application/json"
 jsonpath "$.id" == {{fragment1_id}}
+jsonpath "$.created" exists
+jsonpath "$.updated" exists
+jsonpath "$.ownerId" exists
 
 
 POST http://localhost:8080/v1/fragments
@@ -45,6 +48,9 @@ Content-Type: application/json; charset=utf-8
 jsonpath "$.size" == 22
 jsonpath "$.type" == "text/markdown"
 jsonpath "$.id" == {{fragment2_id}}
+jsonpath "$.created" exists
+jsonpath "$.updated" exists
+jsonpath "$.ownerId" exists
 
 
 GET http://localhost:8080/v1/fragments
