@@ -78,6 +78,7 @@ jobs:
             AWS_S3_BUCKET_NAME=cwhitton-fragments
             API_URL=http://EC2Con-EcsEl-DgLl6XPfbc7U-205527954.us-east-1.elb.amazonaws.com:8080
             PORT=8080
+            AWS_DYNAMODB_TABLE_NAME=fragments
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
