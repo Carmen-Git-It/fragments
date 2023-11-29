@@ -85,7 +85,7 @@ class Fragment {
     if (!result) {
       throw new Error(`fragment with id ${id} and ownerId ${ownerId} not found`);
     }
-    return result;
+    return new Fragment(result);
   }
 
   /**

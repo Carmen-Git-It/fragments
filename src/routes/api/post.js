@@ -28,7 +28,7 @@ module.exports = async (req, res) => {
       type: contentType.format(parsed),
     });
 
-    await fragment.setData(req.body);
+    await fragment.setData(Buffer.from(req.body));
     await fragment.save();
     logger.info('Created and saved new fragment: ', fragment);
     res.append('Location', url + '/v1/fragments/' + fragment.id);
