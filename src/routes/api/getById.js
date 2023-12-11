@@ -4,6 +4,7 @@ const logger = require('../../logger');
 const MarkdownIt = require('markdown-it');
 const contentType = require('content-type');
 const md = new MarkdownIt();
+const sharp = require('sharp');
 
 /**
  * Get the data for a specific Fragment in a variety of formats
@@ -31,6 +32,18 @@ module.exports = async (req, res) => {
           res.set('content-type', 'text/markdown');
         } else if (params[1] === 'json') {
           res.set('content-type', 'application/json');
+        } else if (params[1] == 'png') {
+          data = await sharp(data).png().toBuffer();
+          res.set('content-type', 'image/png');
+        } else if (params[1] == 'jpg') {
+          data = await sharp(data).jpeg().toBuffer();
+          res.set('content-type', 'image/jpeg');
+        } else if (params[1] == 'webp') {
+          data = await sharp(data).webp().toBuffer();
+          res.set('content-type', 'image/webp');
+        } else if (params[1] == 'gif') {
+          data = await sharp(data).gif().toBuffer();
+          res.set('content-type', 'image/gif');
         }
       } else {
         logger.error('Invalid filetype in getById request: ', params[1]);

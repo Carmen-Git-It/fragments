@@ -69,4 +69,46 @@ describe('POST /v1/fragments', () => {
     expect(res.body.fragment.type).toBe('text/html');
     expect(res.body.fragment.size).toBe('<h1>test</h1>'.length);
   });
+
+  test('can post image/* type', async () => {
+    let res = await request(app)
+      .post('/v1/fragments')
+      .set('content-type', 'image/png')
+      .auth('test123', 'test123')
+      .send('imagebinary');
+    expect(res.statusCode).toBe(201);
+    expect(res.body.status).toBe('ok');
+    expect(res.body.fragment.type).toBe('image/png');
+    expect(res.body.fragment.size).toBe('imagebinary'.length);
+
+    res = await request(app)
+      .post('/v1/fragments')
+      .set('content-type', 'image/jpeg')
+      .auth('test123', 'test123')
+      .send('imagebinary');
+    expect(res.statusCode).toBe(201);
+    expect(res.body.status).toBe('ok');
+    expect(res.body.fragment.type).toBe('image/jpeg');
+    expect(res.body.fragment.size).toBe('imagebinary'.length);
+
+    res = await request(app)
+      .post('/v1/fragments')
+      .set('content-type', 'image/gif')
+      .auth('test123', 'test123')
+      .send('imagebinary');
+    expect(res.statusCode).toBe(201);
+    expect(res.body.status).toBe('ok');
+    expect(res.body.fragment.type).toBe('image/gif');
+    expect(res.body.fragment.size).toBe('imagebinary'.length);
+
+    res = await request(app)
+      .post('/v1/fragments')
+      .set('content-type', 'image/webp')
+      .auth('test123', 'test123')
+      .send('imagebinary');
+    expect(res.statusCode).toBe(201);
+    expect(res.body.status).toBe('ok');
+    expect(res.body.fragment.type).toBe('image/webp');
+    expect(res.body.fragment.size).toBe('imagebinary'.length);
+  });
 });

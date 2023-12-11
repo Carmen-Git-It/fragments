@@ -2,6 +2,7 @@ const request = require('supertest');
 
 const app = require('../../src/app');
 const contentType = require('content-type');
+const fs = require('node:fs');
 
 describe('GET /v1/fragments/:id.ext', () => {
   // If the request is missing the Authorization header, it should be forbidden
@@ -146,5 +147,40 @@ describe('GET /v1/fragments/:id.ext', () => {
     expect(res.statusCode).toBe(200);
     expect(res.text).toBe('{"msg":"test"}');
     expect(contentType.parse(res).type).toBe('text/plain');
+  });
+
+  test('image/* type converts to other types', async () => {
+    const file = Buffer.from(fs.readFileSync('./tests/test.png'));
+    let res = await request(app)
+      .post('/v1/fragments')
+      .set('content-type', 'image/png')
+      .auth('test123', 'test123')
+      .send(file);
+    expect(res.statusCode).toBe(201);
+    expect(res.body.status).toBe('ok');
+    expect(res.body.fragment.type).toBe('image/png');
+    expect(res.body.fragment.size).toBe(file.length);
+
+    const id = res.body.fragment.id;
+
+    // image/png
+    res = await request(app).get(`/v1/fragments/${id}.png`).auth('test123', 'test123');
+    expect(res.statusCode).toBe(200);
+    expect(contentType.parse(res).type).toBe('image/png');
+
+    // image/jpeg
+    res = await request(app).get(`/v1/fragments/${id}.jpg`).auth('test123', 'test123');
+    expect(res.statusCode).toBe(200);
+    expect(contentType.parse(res).type).toBe('image/jpeg');
+
+    // image/gif
+    res = await request(app).get(`/v1/fragments/${id}.gif`).auth('test123', 'test123');
+    expect(res.statusCode).toBe(200);
+    expect(contentType.parse(res).type).toBe('image/gif');
+
+    // image/webp
+    res = await request(app).get(`/v1/fragments/${id}.webp`).auth('test123', 'test123');
+    expect(res.statusCode).toBe(200);
+    expect(contentType.parse(res).type).toBe('image/webp');
   });
 });

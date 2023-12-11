@@ -20,12 +20,20 @@ typeExtensionMap.set('text/plain', ['txt']);
 typeExtensionMap.set('text/markdown', ['md', 'html', 'txt']);
 typeExtensionMap.set('text/html', ['html', 'txt']);
 typeExtensionMap.set('application/json', ['json', 'txt']);
+typeExtensionMap.set('image/png', ['png', 'jpg', 'webp', 'gif']);
+typeExtensionMap.set('image/jpeg', ['png', 'jpg', 'webp', 'gif']);
+typeExtensionMap.set('image/webp', ['png', 'jpg', 'webp', 'gif']);
+typeExtensionMap.set('image/gif', ['png', 'jpg', 'webp', 'gif']);
 
 const typeConversionMap = new Map();
 typeConversionMap.set('text/plain', ['text/plain']);
 typeConversionMap.set('text/markdown', ['text/plain', 'text/html', 'text/markdown']);
 typeConversionMap.set('text/html', ['text/plain', 'text/html']);
 typeConversionMap.set('application/json', ['text/plain', 'application/json']);
+typeConversionMap.set('image/png', ['image/png', 'image/jpeg', 'image/webp', 'image/gif']);
+typeConversionMap.set('image/jpeg', ['image/png', 'image/jpeg', 'image/webp', 'image/gif']);
+typeConversionMap.set('image/webp', ['image/png', 'image/jpeg', 'image/webp', 'image/gif']);
+typeConversionMap.set('image/gif', ['image/png', 'image/jpeg', 'image/webp', 'image/gif']);
 
 class Fragment {
   constructor({ id, ownerId, created, updated, type, size = 0 }) {
